@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Планирование найма на H2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple: #6B28B4;
+  --purple-mid: #8B44D4;
+  --purple-light: #F0E8FC;
+  --purple-xlight: #F8F4FE;
+  --green: #179E6C;
+  --green-light: #E6F7F1;
+  --red: #D63B5A;
+  --red-light: #FDE8EC;
+  --amber: #D97706;
+  --amber-light: #FEF3C7;
+  --text: #0F0F12;
+  --text-2: #3D3D4D;
+  --muted: #7A7A8C;
+  --border: #E4E4EF;
+  --surface: #F7F7FB;
+  --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--white);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #3A0D6E 0%, #6B28B4 55%, #9B5DE5 100%);
+  border-radius: 20px;
+  margin: 32px 0 0;
+  padding: 48px 52px 44px;
+  overflow: hidden;
+  color: #fff;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(155,93,229,0.4) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.hero h1 em { font-style: normal; color: #C4A0F8; }
+.hero-sub { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+
+/* TOC */
+.toc {
+  background: var(--purple-xlight);
+  border-left: 3px solid var(--purple);
+  border-radius: 0 12px 12px 0;
+  padding: 18px 22px;
+  margin: 24px 0 40px;
+}
+.toc-title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--purple);
+  margin-bottom: 10px;
+}
+.toc a {
+  display: block;
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 3px 0;
+  font-weight: 500;
+  transition: color 0.12s;
+}
+.toc a:hover { color: var(--purple); }
+.toc a::before { content: '→ '; opacity: 0.35; }
+
+/* HEADINGS */
+h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 48px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--purple);
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin-left: 8px;
+}
+
+h3 {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--purple);
+  margin: 24px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+p { margin-bottom: 12px; color: var(--text-2); }
+ul, ol { margin: 6px 0 14px 18px; color: var(--text-2); }
+li { margin-bottom: 5px; }
+strong { color: var(--text); }
+
+/* PROCESS STEPS */
+.process-steps { display: flex; flex-direction: column; margin: 14px 0 20px; position: relative; }
+.process-steps::before {
+  content: '';
+  position: absolute;
+  left: 19px; top: 20px; bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--purple), var(--purple-light));
+}
+.proc-step { display: flex; gap: 16px; align-items: flex-start; padding: 8px 0; position: relative; }
+.proc-num {
+  width: 40px; height: 40px;
+  background: var(--purple); color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem;
+  flex-shrink: 0; position: relative; z-index: 1;
+  box-shadow: 0 0 0 4px #fff;
+}
+.proc-content {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  flex: 1; margin-top: 2px;
+}
+.proc-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 3px; }
+.proc-date {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--purple-light);
+  color: var(--purple);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+.proc-desc  { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+/* CALLOUTS */
+.callout {
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 12px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.callout-body { flex: 1; }
+.callout-body strong { display: block; margin-bottom: 3px; font-size: 0.9rem; color: inherit; }
+.callout.purple { background: var(--purple-xlight); border: 1px solid rgba(107,40,180,0.2); color: #3D1A6E; }
+.callout.green  { background: var(--green-light);   border: 1px solid rgba(23,158,108,0.25); color: #0D5C3C; }
+.callout.red    { background: var(--red-light);     border: 1px solid rgba(214,59,90,0.2);   color: #831828; }
+.callout.amber  { background: var(--amber-light);   border: 1px solid rgba(217,119,6,0.25);  color: #7C3B00; }
+
+/* TABLE */
+.role-table {
+  width: 100%; border-collapse: collapse;
+  margin: 12px 0 20px; font-size: 0.88rem;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.role-table th {
+  background: var(--purple); color: #fff;
+  padding: 11px 16px; text-align: left;
+  font-weight: 700; font-size: 0.82rem;
+}
+.role-table td {
+  padding: 11px 16px; border-bottom: 1px solid var(--border);
+  vertical-align: top; color: var(--text-2); line-height: 1.6;
+}
+.role-table tr:last-child td { border-bottom: none; }
+.role-table tr:nth-child(even) td { background: var(--surface); }
+
+/* CARD GRID */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 14px 0 20px;
+}
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  border-top: 3px solid var(--purple);
+  transition: box-shadow 0.15s;
+}
+.step-card:hover { box-shadow: 0 4px 16px rgba(107,40,180,0.1); }
+.step-num {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--purple);
+  margin-bottom: 5px;
+}
+.step-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 5px; line-height: 1.3; }
+.step-desc  { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+/* ACTION CHECKLIST */
+.checklist { list-style: none; margin: 14px 0 20px; padding: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  color: var(--text-2);
+}
+.checklist li .check-num {
+  width: 26px; height: 26px;
+  background: var(--purple);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.75rem;
+  flex-shrink: 0;
+}
+.checklist li .check-text { flex: 1; line-height: 1.5; }
+.checklist li .check-text strong { color: var(--text); }
+.checklist li .check-date {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--purple);
+  background: var(--purple-light);
+  border-radius: 6px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  align-self: center;
+}
+
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+.footer {
+  text-align: center; color: var(--muted);
+  font-size: 0.82rem; margin-top: 60px;
+  padding-top: 24px; border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">📅 Планирование · H2 2025</div>
+  <h1>Планирование найма<br><em>на второе полугодие</em></h1>
+  <p class="hero-sub">Новый подход: реалистично, в рамках одного цикла, без обязательных корректировок</p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">Содержание</div>
+  <a href="#goal">Цель изменений</a>
+  <a href="#timeline">Сроки и этапы</a>
+  <a href="#responsibilities">Зоны ответственности</a>
+  <a href="#principles">Важные принципы</a>
+  <a href="#actions">Что требуется от вас сейчас</a>
+</div>
+
+<!-- GOAL -->
+<h2 id="goal"><span class="sec-icon">🎯</span>Цель изменений</h2>
+<p>Мы меняем подход к планированию найма на второе полугодие. Задача — спланировать найм <strong>реалистично</strong>, в соответствии с целями компании, <strong>за один цикл</strong> — без обязательных корректировок после финализации целей.</p>
+
+<div class="card-grid">
+  <div class="step-card">
+    <div class="step-num">Раньше</div>
+    <div class="step-title">Корректировки после финала</div>
+    <div class="step-desc">Планы пересматривались после согласования целей. Это замедляло старт и создавало неопределённость.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-num">Теперь</div>
+    <div class="step-title">Один цикл — финальный план</div>
+    <div class="step-desc">Всё фиксируется до 16 июня. Дальнейшие корректировки — исключение, а не норма.</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- TIMELINE -->
+<h2 id="timeline"><span class="sec-icon">📅</span>Сроки и этапы</h2>
+
+<div class="process-steps">
+  <div class="proc-step">
+    <div class="proc-num">1</div>
+    <div class="proc-content">
+      <div class="proc-date">с 12 мая</div>
+      <div class="proc-title">Самостоятельное планирование ФОТ</div>
+      <div class="proc-desc">Вы определяете роли, количество, предварительные бюджеты на H2. Без привязки к детальному профилю успеха — только структура потребности.</div>
+    </div>
+  </div>
+  <div class="proc-step">
+    <div class="proc-num">2</div>
+    <div class="proc-content">
+      <div class="proc-date">20–30 мая</div>
+      <div class="proc-title">1:1 — Профиль + вилка</div>
+      <div class="proc-desc">Вы инициируете встречу со мной. Вместе фиксируем: цели роли, профиль успеха, реальную рыночную вилку. Это основа для согласования. Описание профиля ролей нужно для вакансий типа <em>change</em>.</div>
+    </div>
+  </div>
+  <div class="proc-step">
+    <div class="proc-num">3</div>
+    <div class="proc-content">
+      <div class="proc-date">до 11 июня</div>
+      <div class="proc-title">Согласование ролей с Настей и Ксюшей</div>
+      <div class="proc-desc">Передаёте согласованный профиль и бюджет. Утверждается попадание в тотальный ФОТ и соответствие целям компании.</div>
+    </div>
+  </div>
+</div>
+
+
+
+<hr>
+
+<!-- RESPONSIBILITIES -->
+<h2 id="responsibilities"><span class="sec-icon">👥</span>Зоны ответственности</h2>
+
+<table class="role-table">
+  <tr><th>Кто</th><th>За что отвечает</th></tr>
+  <tr>
+    <td><strong>Нанимающий менеджер</strong></td>
+    <td>
+      Самостоятельно спланировать ФОТ на H2 (роли, количество, бюджеты)<br>
+      Принять решение о необходимости 1:1 и инициировать встречу в окне 20–30 мая<br>
+      Принести на встречу: цели роли, своё видение профиля и ожидания по вилке<br>
+      Согласовать роли с Настей и Ксюшей до 11 июня
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Руководитель отдела подбора</strong></td>
+    <td>
+      Создать и поддерживать процесс<br>
+      В рамках 1:1 (по вашей инициативе) помочь сформировать профиль успеха и актуальную рыночную вилку<br>
+      Отвечать на вопросы в рамках этапов
+    </td>
+  </tr>
+  <tr>
+    <td><strong>HRD + CFO</strong></td>
+    <td>
+      Утверждение ролей в рамках тотального ФОТ<br>
+      Проверка соответствия целям компании
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- PRINCIPLES -->
+<h2 id="principles"><span class="sec-icon">📌</span>Важные принципы</h2>
+
+<div class="callout green">
+  <div class="callout-icon">📌</div>
+  <div class="callout-body"><strong>Корректировки после 11 июня — не норма</strong>Мы закладываем всё реалистично сразу. Финальный план — финальный.</div>
+</div>
+<div class="callout amber">
+  <div class="callout-icon">📌</div>
+  <div class="callout-body"><strong>Если внутри что-то изменится</strong>Цели компании остаются стабильными. Но приоритеты внутри, ключевые проекты или КР у C-1 могут немного скорректироваться — в таком случае разберёмся индивидуально.</div>
+</div>
+<div class="callout purple">
+  <div class="callout-icon">✅</div>
+  <div class="callout-body"><strong>Инициатива определяет поддержку</strong>Кто инициирует встречу в окне — тот получает поддержку. Кто нет — забирает полную ответственность за качество плана.</div>
+</div>
+
+<hr>
+
+<!-- ACTIONS -->
+<h2 id="actions"><span class="sec-icon">🚀</span>Что требуется от вас</h2>
+<p>Четыре шага, которые нужно сделать в ближайшие недели:</p>
+
+<ul class="checklist">
+  <li>
+    <div class="check-num">1</div>
+    <div class="check-text"><strong>Забукируйте время в календаре</strong> для планирования ФОТ</div>
+    <div class="check-date">с 12 мая</div>
+  </li>
+  <li>
+    <div class="check-num">2</div>
+    <div class="check-text"><strong>Оценить потребность в 1:1</strong> со мной. Если нужно — записаться в окне</div>
+    <div class="check-date">20–30 мая</div>
+  </li>
+  <li>
+    <div class="check-num">3</div>
+    <div class="check-text"><strong>Согласовать с Настей и Ксюшей роли и бюджет</strong></div>
+    <div class="check-date">до 11 июня</div>
+  </li>
+
+</ul>
+
+<div class="callout purple">
+  <div class="callout-icon">💬</div>
+  <div class="callout-body"><strong>Есть вопросы?</strong>Я на связи. Но вход в процесс — ваша ответственность.</div>
+</div>
+
+<div class="footer">
+  По всем вопросам — пишите напрямую · Встреча 1:1 — по вашей инициативе в окне 20–30 мая
+</div>
+
+</body>
+</html>
